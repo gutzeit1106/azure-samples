@@ -1,0 +1,19 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - tree
+runcmd:
+  - sudo apt-get install apt-transport-https lsb-release software-properties-common dirmngr -y
+  - AZ_REPO=$(lsb_release -cs)
+  - echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+  - sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv --keyserver packages.microsoft.com --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
+  - sudo apt-get update
+  - sudo apt-get install azure-cli
+  - sudo apt-get install liblttng-ust0 libcurl3 libssl1.0.0 libkrb5-3 zlib1g libicu60 -y
+  - sudo wget https://aka.ms/downloadazcopylinux64 -O /opt/azcopy.tar.gz -r
+  - sudo tar -xf /opt/azcopy.tar.gz -C /opt/
+  - sudo /opt/install.sh
+  - sudo wget https://aka.ms/downloadazcopy-v10-linux -O /opt/azcopyv10.tar.gz -r
+  - sudo tar -xzf /opt/azcopyv10.tar.gz -C /opt/
+  - sudo apt-get install curl -y
+  - sudo curl -sL https://github.com/yangl900/armclient-go/releases/download/v0.2.3/armclient-go_macOS_64-bit.tar.gz | sudo tar xz -C /opt/

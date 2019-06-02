@@ -1,0 +1,2 @@
+az group create --name DevTools --location japaneast
+az vm create --resource-group DevTools --name ubuntu-dev-server --image UbuntuLTS --custom-data cloud_init_config.txt --generate-ssh-keys 
