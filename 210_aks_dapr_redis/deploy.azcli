@@ -1,0 +1,19 @@
+#　Azure への接続
+az login
+
+# サブスクリプションの選択
+az account set -s <YourSubscription>
+
+# リソースグループの作成
+az group create --name myAKSdapr --location japaneast
+
+# AKS クラスタの作成（k8sは、1.13.x 以上を使用する必要がある）
+az aks create --resource-group myAKSdapr \
+    --name myAKSDaprCluster \
+    --node-count 2 \
+    --enable-addons http_application_routing
+    --enable-rbac \
+    --generate-ssh-keys
+
+# クラスタの資格情報を取得する
+az aks get-credentials --resource-group myAKSdapr --name myAKSDaprCluster
